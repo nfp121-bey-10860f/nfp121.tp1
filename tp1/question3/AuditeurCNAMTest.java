@@ -29,7 +29,7 @@ public class AuditeurCNAMTest extends junit.framework.TestCase {
     // à l'aide du menu contextuel "Présentoir --> Engagements".
     // Notez cependant que ce dernier ne peut saisir les objets primitifs
     // du présentoir (les objets sans constructeur, comme int, float, etc.).
-
+    private question3.AuditeurCNAM auditeur1;
     /**
      * Constructeur de la classe-test AuditeurCNAMTest.
      */
@@ -44,6 +44,8 @@ public class AuditeurCNAMTest extends junit.framework.TestCase {
     protected void setUp() // throws java.lang.Exception
     {
         // Initialisez ici vos engagements
+        System.out.println("test started");
+        auditeur1 = new question3.AuditeurCNAM("é$e", "Emile", "123456");
     }
 
     /**
@@ -54,6 +56,21 @@ public class AuditeurCNAMTest extends junit.framework.TestCase {
     protected void tearDown() // throws java.lang.Exception
     {
         // Libérez ici les ressources engagées par setUp()
+        auditeur1 = null;
+        System.out.println("test finished");
+        
+    }
+    
+    //test getters
+    public void test_getters(){
+        assertTrue(auditeur1.nom() == "é$e");
+        assertTrue(auditeur1.prenom() == "Emile");
+        assertTrue(auditeur1.matricule() == "123456");
+    }
+    
+    //test to check if the replacement from character to _ works
+    public void test_specialCharacters(){
+        assertTrue(auditeur1.login().equals("e_e_e"));
     }
 
     /*
@@ -105,7 +122,6 @@ public class AuditeurCNAMTest extends junit.framework.TestCase {
     }
 
     public void test_nom_court_avec_particule() {
-
         question3.AuditeurCNAM auditeur1 = new question3.AuditeurCNAM("Te-Te",
                 "max", "12345");
         assertEquals("Mr Te-Te max ", "Te-Te", auditeur1.nom());

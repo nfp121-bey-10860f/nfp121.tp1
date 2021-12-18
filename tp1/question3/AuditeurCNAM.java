@@ -1,12 +1,5 @@
 package question3;
-
-/**
- * NFP121 TpIntroduction, usage de BlueJ et du "Submitter".
- * 
- * @version septembre 2009
- * @author à compléter
- * @see java.lang.String, java.lang.Math
- */
+import java.text.Normalizer;
 public class AuditeurCNAM {
     /** l'attribut nom de chaque auditeur. */
     private String nom;
@@ -35,17 +28,36 @@ public class AuditeurCNAM {
     /**
      * le login au Cnam : 6 premières lettres du nom suivies de la première
      * lettre du prénom séparées de '_' . le login retourné est en minuscules,
-     * le trait d'union, ou spéciaux <i>(pour unix)</i> sont remplacés par des
+     * le trait d'union, ou spéciaux sont remplacés par des
      * '_' pas de caractères accentués pour le login voir les classes
      * prédéfines, java.lang.String : les méthodes replaceAll, toLowerCase et
-     * substring java.lang.Math : la méthode min<br>
-     * <b>BlueJ : Menu Aide</b>
+     * substring java.lang.Math : la méthode min
      * 
      * @return le login du Cnam simplifié, sans les adaptations dues aux
      *         homonymes...
      */
     public String login() {
-        return "";// à compléter
+        String n = this.nom;
+        String p = this.prenom;
+        
+        //Remove accents from the accented characters in the nom and prenom
+        n = Normalizer.normalize(n, Normalizer.Form.NFD);
+        p = Normalizer.normalize(p, Normalizer.Form.NFD);
+        n = n.replaceAll("[^\\p{ASCII}]", "");
+        p = p.replaceAll("[^\\p{ASCII}]", "");
+        
+        //take only letters and replace special characters with _
+        String newNom = n.replaceAll("[^a-zA-Z]", "_");
+        String newPrenom = p.replaceAll("[^a-zA-Z]", "_");
+        
+        //concatenate nom with _ and prenom and return it lower case
+        String result;
+        if(newNom.length() <6)
+            result = newNom + "_" + newPrenom.substring(0,1);
+        else
+            result = newNom.substring(0,6) + "_" + newPrenom.substring(0,1);
+            
+        return result.toLowerCase();
     }
 
     /**
@@ -54,7 +66,7 @@ public class AuditeurCNAM {
      * @return son nom
      */
     public String nom() {
-        return null;// à compléter
+        return this.nom;
     }
 
     /**
@@ -63,7 +75,7 @@ public class AuditeurCNAM {
      * @return son prénom
      */
     public String prenom() {
-        return null;// à compléter
+        return this.prenom;
     }
 
     /**
@@ -72,7 +84,7 @@ public class AuditeurCNAM {
      * @return son matricule
      */
     public String matricule() {
-        return null;// à compléter
+        return this.matricule;
     }
 
     /**
